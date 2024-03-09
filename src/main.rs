@@ -96,6 +96,9 @@ fn ucs(map: &TransMap) -> Result<()> {
         return Ok(());
     };
 
+    closed.push(last);
+    print_state(&open, &closed);
+
     let mut route = vec![last];
 
     while let Some(Trans {
@@ -113,7 +116,8 @@ fn ucs(map: &TransMap) -> Result<()> {
     Ok(())
 }
 
-fn print_state(open: &Vec<Trans>, closed: &Vec<Trans>) {
+fn print_state(open: &[Trans], closed: &[Trans]) {
+    println!("{}. iterace", closed.len());
     println!("Open:");
     print_transs(open);
     println!("Closed:");
@@ -121,28 +125,40 @@ fn print_state(open: &Vec<Trans>, closed: &Vec<Trans>) {
     println!();
 }
 
-fn print_transs(transs: &Vec<Trans>) {
-    for Trans {
-        from,
-        to: Point { x, y },
-        price,
-    } in transs
+fn print_transs(transs: &[Trans]) {
+    for (
+        i,
+        Trans {
+            from,
+            to: Point { x, y },
+            price,
+        },
+    ) in transs.iter().enumerate()
     {
+        if i != 0 {
+            print!(", ");
+        }
         if let Some(Point { x: fx, y: fy }) = from {
-            print!("([{y}, {x}], {price}, [{fy}, {fx}]), ");
+            print!("([{y}, {x}], {price}, [{fy}, {fx}])");
         } else {
-            print!("([{y}, {x}], {price}, [null]), ");
+            print!("([{y}, {x}], {price}, [null])");
         }
     }
     println!();
 }
 
 fn print_route(route: &[Trans]) {
-    for Trans {
-        to: Point { x, y }, ..
-    } in route.iter().rev()
+    for (
+        i,
+        Trans {
+            to: Point { x, y }, ..
+        },
+    ) in route.iter().rev().enumerate()
     {
-        print!("[{y}, {x}], ");
+        if i != 0 {
+            print!(", ");
+        }
+        print!("[{y}, {x}]");
     }
     println!()
 }
