@@ -103,12 +103,12 @@ impl Point {
     pub fn surround(&self) -> impl Iterator<Item = Point> {
         let &Self { x, y } = self;
         [
-            Self::new(x - 1, y - 1),
-            Self::new(x, y - 1),
-            Self::new(x + 1, y - 1),
-            Self::new(x - 1, y),
+            Self::new(x.wrapping_sub(1), y.wrapping_sub(1)),
+            Self::new(x, y.wrapping_sub(1)),
+            Self::new(x + 1, y.wrapping_sub(1)),
+            Self::new(x.wrapping_sub(1), y),
             Self::new(x + 1, y),
-            Self::new(x - 1, y + 1),
+            Self::new(x.wrapping_sub(1), y + 1),
             Self::new(x, y + 1),
             Self::new(x + 1, y + 1),
         ]

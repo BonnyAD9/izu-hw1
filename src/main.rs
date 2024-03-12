@@ -139,9 +139,9 @@ fn print_transs(transs: &[Trans]) {
             print!(", ");
         }
         if let Some(Point { x: fx, y: fy }) = from {
-            print!("([{y}, {x}], {price}, [{fy}, {fx}])");
+            print!("([{x}, {y}], {price}, [{fx}, {fy}])");
         } else {
-            print!("([{y}, {x}], {price}, [null])");
+            print!("([{x}, {y}], {price}, [null])");
         }
     }
     println!();
@@ -158,7 +158,7 @@ fn print_route(route: &[Trans]) {
         if i != 0 {
             print!(", ");
         }
-        print!("[{y}, {x}]");
+        print!("[{x}, {y}]");
     }
     println!()
 }
